@@ -20,7 +20,7 @@ This is a simple and fun two-player racing game built using **Pygame** and **Tki
 
 ## 🖼️ Screenshots
 
-(Add your own screenshots here, like the main menu, race in progress, and winner screen.)
+data/Start.png
 
 ---
 
