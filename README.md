@@ -20,7 +20,7 @@ This is a simple and fun two-player racing game built using **Pygame** and **Tki
 
 ## 🖼️ Screenshots
 
-data/Start.png
+![Game Preview](data/Start.png)
 
 ---
 
@@ -30,5 +30,13 @@ Make sure you have Python 3.8+ installed. Then install the required libraries:
 
 ```bash
 pip install -r requirements.txt
+```
 
-## Run main.exe and enjoy!
+## 🕹️ Run the game
+
+You can start the game using main.exe
+Alternatively, to run the game locally:
+
+```bash
+python main.py
+```
