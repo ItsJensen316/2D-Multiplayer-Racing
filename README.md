@@ -34,7 +34,7 @@ pip install -r requirements.txt
 
 ## 🕹️ Run the game
 
-You can start the game using main.exe
+You can now start the game using main.exe!  
 Alternatively, to run the game locally:
 
 ```bash
