@@ -6,7 +6,7 @@ and compete for saved lap and race records on one keyboard.
 
 ## Download and play
 
-[![Download for Windows](https://img.shields.io/badge/Download-Windows_EXE-5865F2?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/ItsJensen316/https://github.com/ItsJensen316/2D-Multiplayer-Racing/releases/latest/download/ApexRacing.exe)
+[![Download for Windows](https://img.shields.io/badge/Download-Windows_EXE-5865F2?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/ItsJensen316/2D-Multiplayer-Racing/releases/latest/download/ApexRacing.exe)
 
 Download **ApexRacing.exe**, save it anywhere convenient, and double-click to play.
 No installation, Python, or separate asset files are required on compatible Windows PCs.
