@@ -12,10 +12,6 @@ Download **ApexRacing.exe**, save it anywhere convenient, and double-click to pl
 No installation, Python, or separate asset files are required on compatible Windows PCs.
 Both players use the same keyboard.
 
-<!-- Replace YOUR_REPOSITORY above with this GitHub repository's exact name.
-The download becomes available after ApexRacing.exe is uploaded to a published
-GitHub Release marked as the latest release. Keep the asset filename unchanged. -->
-
 ![Main menu](docs/screenshots/menu.webp)
 
 ## Features
@@ -103,69 +99,6 @@ a two-second stop while the clock continues and has a five-second cooldown. It
 does not refill boost or advance checkpoints. Pausing stops the race and penalty
 clocks; restarting resets the race.
 
-## Run from source
-
-Python 3.13 and Pygame 2.6.1 are the Windows setup used for this project. From the
-folder containing `main.py`, run these commands in Command Prompt:
-
-```bat
-py -3.13 -m pip install -r requirements.txt
-py -3.13 main.py
-```
-
-For IDLE, open `main.py` with IDLE 3.13 and press **F5**. Keep `racing/` and `data/`
-next to `main.py`. Run the root entry point rather than `racing/app.py`.
-
-## Build a Windows executable
-
-Build on Windows, using the same Python installation that runs the game.
-PyInstaller packages Python, Pygame and the game assets into a single executable.
-Players do not need Python installed.
-
-1. Extract the project to a writable folder and close the running game.
-2. Open that folder in File Explorer, type `cmd` into the address bar and press Enter.
-3. Install the build dependencies:
-
-```bat
-py -3.13 -m pip install -r requirements.txt
-py -3.13 -m pip install --upgrade pyinstaller
-```
-
-4. Build the executable:
-
-```bat
-py -3.13 -m PyInstaller --noconfirm --clean --onefile --windowed --name ApexRacing --add-data "data:data" main.py
-```
-
-Alternatively, after installing the dependencies, double-click `build_windows.bat`.
-It changes to the project folder and runs the same build command.
-
-5. The result is **`dist/ApexRacing.exe`**. Copy it to another folder and test it.
-   A one-file executable can be distributed by itself; no separate `data/` folder
-   is needed. Its first startup can take a little longer while it unpacks.
-6. Check all tracks, audio, boost/recovery, restart and saved records in the built
-   executable. Close/reopen it to verify persistence.
-
-`--add-data "data:data"` includes both the images and `data/tracks/circuits.json`.
-The existing file-relative asset paths work with that bundle layout. No game
-source changes are required. Use the root `main.py` as the entry point.
-
-If a windowed build fails to launch, build a separate console version to see errors:
-
-```bat
-py -3.13 -m PyInstaller --noconfirm --clean --onefile --console --name ApexRacingDebug --add-data "data:data" main.py
-```
-
-Then run `dist\ApexRacingDebug.exe` from Command Prompt and inspect the error.
-
-Generated `build/`, `dist/`, `.spec` and `__pycache__/` items do not belong in the
-source repository. Distribute the executable as a release download, alongside
-this README if desired. Keep the screenshot folder with the README when posting
-the source project to GitHub.
-
-Packaging references: [PyInstaller usage](https://pyinstaller.org/en/stable/usage.html)
-and [bundled asset paths](https://pyinstaller.org/en/stable/runtime-information.html).
-
 ## Records and settings
 
 Track records and audio preferences are saved automatically outside the game folder:
@@ -193,45 +126,34 @@ Race records are separated by track and lap count. P1/P2 refer to
 keyboard slots, not named accounts. The first lap includes the standing start;
 later laps are flying laps. Pausing does not add to lap times.
 
-## Tests
+## Run from source
 
-```bat
-py -3.13 -m unittest discover -s tests -v
+Requires Python and Pygame 2.6.1. From the project directory:
+
+```bash
+python -m pip install -r requirements.txt
+python main.py
 ```
 
-The suite contains 37 automated checks for tracks, collisions, timing, persistence,
-boost, recovery and audio behavior. Tests use temporary record folders and dummy
-video/audio drivers. They do not replace testing the Windows executable or listening
-on real speakers.
+## Architecture
 
-## Project layout
-
-| Path | Purpose |
+| Module | Responsibility |
 | --- | --- |
-| `main.py` | Game entry point |
-| `racing/` | Menus, simulation, tracks, records, effects and sound |
-| `data/` | Images and circuit definitions |
-| `docs/screenshots/` | Current README screenshots |
-| `tests/` | Automated regression checks |
-| `requirements.txt` | Runtime dependency |
-| `build_windows.bat` | Windows packaging command |
-| `.gitignore` | Excludes generated builds, caches and local files |
-| `.gitattributes` | Consistent text line endings |
+| `racing/app.py` | Screens, input, HUD and race lifecycle |
+| `racing/driver.py` | Fixed-step physics, collisions, boost and recovery |
+| `racing/tracks.py` | Track rendering, road masks and checkpoints |
+| `racing/records.py` | Persistent records and audio settings |
+| `racing/audio.py` | Synthesized engine loops and sound effects |
+| `racing/effects.py` | Skid marks and collision sparks |
 
-## Publish a Windows release
+Circuit layouts are defined in `data/tracks/circuits.json`.
+Physics runs at 120 simulation steps per second. Engine sounds use precomputed
+waveforms with pitch crossfades; no external audio assets are required.
 
-Keep the local build at `dist/ApexRacing.exe`. The `dist/` directory is ignored
-by Git; distribute the executable through GitHub Releases.
+## Tests
 
-1. Push the source project to GitHub.
-2. Open the repository's **Releases** page and choose **Draft a new release**.
-3. Create a version tag such as `v1.0.0` targeting `main`.
-4. Give the release a title, then attach `dist/ApexRacing.exe` as a release asset.
-5. Publish the release and ensure it is marked as the latest release.
-6. Replace `YOUR_REPOSITORY` in the download button near the top of this README
-   with the exact repository name.
+```bash
+python -m unittest discover -s tests -v
+```
 
-The button links directly to the latest release's `ApexRacing.exe`. For future
-releases, upload the executable with that same filename to keep the link working.
-
-[GitHub release download links](https://docs.github.com/en/repositories/releasing-projects-on-github/linking-to-releases)
+37 automated checks cover tracks, physics, timing, records, boost, recovery and audio.
