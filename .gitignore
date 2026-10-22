@@ -1,0 +1,26 @@
+# Python caches and environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.pytest_cache/
+.coverage
+htmlcov/
+# Packaging output
+/build/
+/dist/
+*.spec
+*.exe
+# Local settings, saves and secrets
+.env
+.env.*
+!.env.example
+records.json
+*.log
+# Editor and operating system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
